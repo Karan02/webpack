@@ -7,7 +7,9 @@ var extractPlugin = new ExtractTextPlugin({
     filename: "main.css"
 })
 module.exports = {
-    entry:"./src/js/app.js",
+    entry:{
+        app:"./src/js/app.js"
+    },
     output:{
         path:path.resolve(__dirname,"dist"),
         filename:"bundle.js",
@@ -56,6 +58,17 @@ module.exports = {
                         publicPath:"img/"
                     }
                 }
+            },
+            {
+                test:/\.html$/,
+                use:[{
+                    loader:"file-loader",
+                    options:{
+                        name:'[name].[ext]',
+                         
+                    }
+                }],
+                exclude:path.resolve(__dirname,"src/index.html")
             }
         ]
     },
@@ -66,8 +79,14 @@ module.exports = {
         extractPlugin,
         //this will take text file and convert it to html
         new HtmlWebpackPlugin({
+            filename:"index.html",
             template: "src/index.html"
         }),
+        // new HtmlWebpackPlugin({
+        //      filename:"users.html",
+        //     template: "src/users.html",
+        //      chunks:[]
+        // }),
         // delete older dist folder
         new CleanWebpackPlugin([
             "dist"
