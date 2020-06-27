@@ -3,6 +3,7 @@ var webpack = require("webpack")
 var HtmlWebpackPlugin = require("html-webpack-plugin")
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var CleanWebpackPlugin = require("clean-webpack-plugin")
+var webpack = require("webpack")
 var extractPlugin = new ExtractTextPlugin({
     filename: "main.css"
 })
@@ -76,6 +77,12 @@ module.exports = {
         // new webpack.optimize.UglifyJsPlugin({
             
         // }),
+        // provide a custom plugin
+        new webpack.ProvidePlugin({
+            // whenever webpack sees $ or jQuery, use this jquery package
+            $: "jquery",
+            jQuery:"jquery"
+        }),
         extractPlugin,
         //this will take text file and convert it to html
         new HtmlWebpackPlugin({
